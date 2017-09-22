@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name>Ereynitiko Ergastirio</display-name>
+
+    <env-entry>
+        <env-entry-name>jsf/ClientSideSecretKey</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>am9kZXRlcHV0b2hhY2tlcg==</env-entry-value>
+    </env-entry>
+
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+<!--    <context-param>
+        <param-name>org.richfaces.skin</param-name>
+        <param-value>wine</param-value>
+    </context-param>-->
+    <!--<context-param>-->
+  <!--<param-name>org.richfaces.SKIN</param-name>-->
+  <!--<param-value>plain</param-value>-->
+<!--</context-param>-->
+    <!--<context-param>-->
+        <!--<param-name>org.richfaces.CONTROL_SKINNING</param-name>-->
+        <!--<param-value>enable</param-value>-->
+    <!--</context-param>-->
+
+    <!--Για το fileupload -->
+    <!--<context-param>-->
+        <!--<param-name>org.richfaces.fileUpload.createTempFiles</param-name>-->
+        <!--<param-value>true</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+        <!--<param-name>org.richfaces.fileUpload.maxRequestSize</param-name>-->
+        <!--<param-value>500000</param-value>-->
+    <!--</context-param>-->
+
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>auto</param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>
+            org.primefaces.webapp.filter.FileUploadFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <!-- Τέλος για το fileupload -->
+
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <!-- Gia tis hmeromhnies-->
+    <context-param>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+
+    <context-param>
+        <param-name>org.richfaces.resourceOptimization.enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <mime-mapping>
+        <extension>ecss</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+    <session-config>
+        <session-timeout>60</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <!--<secure>true</secure>--> <!-- uncomment only when TLS/SSL is available -->
+        </cookie-config>
+    </session-config>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Restricted</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>HEAD</http-method>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>    
+    </security-constraint>
+    <welcome-file-list>
+        <welcome-file>webContent/hellopage.jsf</welcome-file>
+    </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    
+<!--     Error Pages-->
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/webContent/login.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/exception.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.xhtml</location>
+    </error-page>
+ <filter>
+        <filter-name>RestrictPageFilter</filter-name>
+        <filter-class>filters.RestrictPageFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RestrictPageFilter</filter-name>
+         <url-pattern>/webContent/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+
+
+
+  <context-param>
+        <param-name>com.sun.faces.writeStateAtFormEnd</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>dark-hive</param-value>
+    </context-param>
+
+    <!--bootstrap, delta-->
+
+</web-app>

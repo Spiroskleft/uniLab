@@ -1,0 +1,162 @@
+
+<!--<ui:composition xmlns="http://www.w3.org/1999/xhtml"-->
+                <!--xmlns:h="http://java.sun.com/jsf/html"-->
+                <!--xmlns:ui="http://java.sun.com/jsf/facelets"-->
+                <!--xmlns:p="http://primefaces.org/ui"-->
+                <!--xmlns:f="http://java.sun.com/jsf/composite"-->
+<!--&gt;-->
+
+    <!--<h:form>-->
+
+        <!--<p:panelMenu >-->
+            <!--<p:submenu label="Μέλη">-->
+                <!--<p:menuitem value="Μέλη" action="/webContent/meloi.jsf?faces-redirect=true"-->
+                            <!--icon="ui-icon-disk"/>-->
+                <!--<p:menuitem value="Κατηγορία Μέλους" action="/webContent/katigoria.jsf?faces-redirect=true"-->
+                            <!--icon="ui-icon-disk"/>-->
+
+                <!--&lt;!&ndash;<p:menuitem value="Update" actionListener="#{menuView.update}"  icon="ui-icon-arrowrefresh-1-w" />&ndash;&gt;-->
+            <!--</p:submenu>-->
+
+            <!--<p:separator/>-->
+
+            <!--<p:separator/>-->
+            <!--<p:submenu label="Δημοσιεύσεις">-->
+                <!--<p:menuitem value="Δημοσιεύσης" action="/webContent/dimosieuseis.jsf?faces-redirect=true"-->
+                            <!--icon="ui-icon-disk"/>-->
+                <!--<p:menuitem value="Θεματική Εννότητα"-->
+                            <!--action="/webContent/thematiki.jsf?faces-redirect=true" icon="ui-icon-bookmark"/>-->
+                <!--<p:menuitem value="Είδος Δημοσίευσης"-->
+                            <!--action="/webContent/eidosdimosieusis.jsf?faces-redirect=true" icon="ui-icon-disk"/>-->
+                <!--<p:menuitem value="Καταχώρηση Προμηθευτη Prime"-->
+                            <!--action="/webContent/eisagogiPromithefti1.jsf?faces-redirect=true" icon="ui-icon-disk"/>-->
+
+            <!--</p:submenu>-->
+            <!--<p:separator/>-->
+
+            <!--<p:submenu label="Ερευνητικά Έργα">-->
+                <!--<p:menuitem value="Ερευνητικά Έργα"-->
+                            <!--action="/webContent/ereynitikaErga.jsf?faces-redirect=true" icon="ui-icon-disk"/>-->
+                <!--<p:menuitem value="Κατάσταση Έργου"-->
+                            <!--action="/webContent/katastasiErgou.jsf?faces-redirect=true" icon="ui-icon-bookmark"/>-->
+                <!--<p:menuitem value="Κατηγορία Προϊόντων"-->
+                            <!--action="/webContent/epexergasiaKatigorias.jsf?faces-redirect=true" icon="ui-icon-bookmark"/>-->
+
+
+            <!--</p:submenu>-->
+
+            <!--<p:separator/>-->
+            <!--<p:submenu label="Μαθήματα">-->
+                <!--<p:menuitem value="Μαθήματα"-->
+                            <!--action="/webContent/Mathimata.jsf?faces-redirect=true" icon="ui-icon-disk"/>-->
+                <!--<p:menuitem value="Επίπεδο Μαθήματος"-->
+                            <!--action="/webContent/epipedo.jsf?faces-redirect=true" icon="ui-icon-bookmark"/>-->
+
+            <!--</p:submenu>-->
+            <!--<p:separator/>-->
+            <!--<p:submenu label="Ανακοινώσεις">-->
+                <!--<p:menuitem value="Ανακοινώσεις"-->
+                            <!--action="/webContent/anakoinwseis.jsf?faces-redirect=true" icon="ui-icon-disk"/>-->
+
+            <!--</p:submenu>-->
+        <!--</p:panelMenu>-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenu width="188px"&ndash;&gt;-->
+        <!--&lt;!&ndash;groupExpandedLeftIcon="triangleUp"&ndash;&gt;-->
+        <!--&lt;!&ndash;groupCollapsedLeftIcon="triangleDown"&ndash;&gt;-->
+        <!--&lt;!&ndash;topGroupExpandedRightIcon="chevronUp"&ndash;&gt;-->
+        <!--&lt;!&ndash;topGroupCollapsedRightIcon="chevronDown"&ndash;&gt;-->
+        <!--&lt;!&ndash;itemLeftIcon="disc"&ndash;&gt;-->
+        <!--&lt;!&ndash;>  &lt;!&ndash;dummy attribute, just to keep expanded the selected menu item &ndash;&gt;&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Τιμολόγια">&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Καταχώρηση!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/kataxorisiTimologioy.jsf?faces-redirect=true"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Αναζήτηση"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/timologAnaz.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Προιόν">&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Καταχώρηση!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/eisagogiProin.jsf?faces-redirect=true"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Επεξεργασία Συσκευασίας!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/eisagogiSyskeyasia.jsf?faces-redirect=true"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Επεξεργασία Κατηγορίας Προιόντων!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/epexergasiaKatigorias.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Πληρωμές"&ndash;&gt;-->
+        <!--&lt;!&ndash;rendered="true">&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Καταχώρηση"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/pliromes.jsf?faces-redirect=true"&ndash;&gt;-->
+        <!--&lt;!&ndash;rendered="true"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Προμηθευτες"&ndash;&gt;-->
+        <!--&lt;!&ndash;rendered="true">&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Καταχώρηση!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/eisagogiPromithefti.jsf?faces-redirect=true"&ndash;&gt;-->
+        <!--&lt;!&ndash;rendered="true"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Στατιστικα!">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;    Επιθεωρήσεις Επιθεωρητών &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Τιμή προιόντων!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/proiontaStats.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Αγορές Ανα Μήνα!"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/agoresAnaMhnaStats.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;    Αριθμός Επιθεωρήσεων &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;                <rich:panelMenuItem label="Αριθμός Επιθεωρήσεων"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statArithEpith.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;Αποτελέσματα Επιθεωρήσεων&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Αποτελέσματα Επιθεωρήσεων"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statApotelEpith.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;Πρότυπα Ποιότητας&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Μηχανήματα"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statMhxanhmata.jsf?faces-redirect=true"/>&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<rich:panelMenuGroup label="Απογραφή">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;    Επιθεωρήσεις Επιθεωρητών &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Έγγραφο Απογραφής"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/webContent/apografiDoc.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash;    Αριθμός Επιθεωρήσεων &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;                <rich:panelMenuItem label="Αριθμός Επιθεωρήσεων"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statArithEpith.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;Αποτελέσματα Επιθεωρήσεων&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Αποτελέσματα Επιθεωρήσεων"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statApotelEpith.jsf?faces-redirect=true"/>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;Πρότυπα Ποιότητας&ndash;&gt;-->
+        <!--&lt;!&ndash;<rich:panelMenuItem label="Μηχανήματα"&ndash;&gt;-->
+        <!--&lt;!&ndash;action="/statistika/statMhxanhmata.jsf?faces-redirect=true"/>&ndash;&gt;&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</rich:panelMenuGroup>&ndash;&gt;-->
+        <!--&lt;!&ndash;</rich:panelMenu>&ndash;&gt;-->
+
+
+    <!--</h:form>-->
+
+<!--</ui:composition>-->

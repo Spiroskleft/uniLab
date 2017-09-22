@@ -1,0 +1,171 @@
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+.alignright,
+.firstColumnAlignRight td:first-child {
+     text-align: right;
+     /*vertical-align: top;*/
+ }
+.firstColumnAlignLeft td:first-child {
+    text-align: left;
+    vertical-align: top;
+}
+
+.alignrightTD tr:first-child {
+    text-align: right;
+    /*vertical-align: top;*/
+}
+
+
+/*input[type='text'] {*/
+/*padding-left: 2px;*/
+/*}*/
+/*table#searchForm\:monimosGrid {*/
+/*height: 320px;*/
+/*width: 100%;*/
+/*}*/
+/*table#searchForm\:monimosGrid td{*/
+/*vertical-align: top !important;*/
+/*width: 25%;*/
+/*}*/
+/*table#searchForm\:stoixeiaGrid {*/
+/*margin: 0;*/
+/*text-align: right;*/
+/*width: 560px;*/
+/*}*/
+/*table#searchForm\:photoGrid {*/
+/*padding-left: 12px;*/
+/*}*/
+/*table#searchForm\:photoGrid img {*/
+/*margin-top: 3px;*/
+/*border: 1em solid #94866B;*/
+/*max-height: 300px;*/
+/*max-width: 165px;*/
+/*}*/
+.wrapClass {
+    width: 150px;
+    display: inline-block;
+    word-wrap: break-word;
+}
+
+.wrapClass360px {
+    width: 360px;
+    display: inline-block;
+    word-wrap: break-word;
+}
+
+.alignleft {
+    text-align: left;
+}
+.aligncenter {
+    text-align: center;
+    margin: 0 auto;
+}
+.selectOneMenu {
+    font-size: 11px;
+    font-family: inherit;
+    width: 129px;
+}
+.buttonPrinter,
+.buttonAdd {
+    background-image: url('../resources/icons/printer.png') !important;
+    background-repeat: no-repeat !important;
+    width: 200px;
+}
+.buttonAdd {
+    background-image: url('../resources/icons/add.png') !important;
+}
+.warning {
+    background: #fff6bf url('../resources/icons/warning.png') center no-repeat;
+    background-position: 15px 50%;
+    text-align: left;
+    padding: 5px 20px 5px 45px;
+    border-top: 2px solid #ffd324;
+    border-bottom: 2px solid #ffd324;
+    margin-bottom: 5px;
+}
+.info {
+    background: #e3f1fe url('../resources/icons/information.png') center no-repeat;
+    background-position: 15px 50%;
+    text-align: left;
+    padding: 5px 20px 5px 45px;
+    border-top: 2px solid #7aa6d5;
+    border-bottom: 2px solid #7aa6d5;
+    margin-bottom: 5px;
+}
+.success {
+    background: #e0ffd3 url('../resources/icons/tick.png') center no-repeat;
+    background-position: 15px 50%;
+    text-align: left;
+    padding: 5px 20px 5px 45px;
+    border-top: 2px solid #8ad66a;
+    border-bottom: 2px solid #8ad66a;
+    margin-bottom: 5px;
+}
+.error {
+    background: #ffe4e3 url('../resources/icons/exclamation.png') center no-repeat;
+    background-position: 15px 50%;
+    text-align: left;
+    padding: 5px 0px 5px 45px;
+    border-top: 2px solid #e47e7a;
+    border-bottom: 2px solid #e47e7a;
+    margin-bottom: 5px;
+}
+
+#j_idt10 .topItemMenu > span {
+    color: #fff;
+    padding-left: 5px;
+}
+#j_idt10 .topItemMenu:hover > span {
+    color: #000;
+}
+#j_idt10 .rf-ddm-sel {
+    color: #000;
+}
+.hr{
+    width: 50%;
+    margin-left: 0px;
+}
+
+.hr32{
+    width: 32%;
+    margin-left: 0px;
+}
+
+.hr60{
+    width: 60%;
+    margin-left: 0px;
+}
+.emblem {
+    height: 20px;
+}
+
+.rf-msgs-err{
+    background-image: none !important;
+    padding-left: 0 !important;
+}
+
+.vertAlignPanelGrid td {
+    vertical-align: top;
+}
+
+.cheaper{
+    color:green;
+}
+.expensiver{
+    color:red;
+}
+
+.ui-menuitem-icon.price {
+    background:  url(../icons/price.png) no-repeat !important;
+    height:16px;
+    width:16px;
+}
+
+.noBorder.ui-panelgrid > * > tr,
+.noBorder.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}

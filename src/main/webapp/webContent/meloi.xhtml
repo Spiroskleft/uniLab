@@ -1,0 +1,749 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+
+
+    <ui:define name="title">Μέλη Εργαστηρίου</ui:define>
+    <ui:define name="header">
+        <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml"/>
+    </ui:define><!--  #{request.contextPath}/  -->
+    <ui:define name="topMenu"><ui:include src="/menus/topMenu.xhtml"></ui:include></ui:define>
+    <!--<ui:define name="leftMenu"><ui:include src="/menus/leftKentriki.xhtml"></ui:include></ui:define>-->
+    <ui:define name="content">
+        <p:panel>
+        <p:commandButton value="Επιστροφή"
+                         action="/webContent/arxiki.jsf?faces-redirect=true"
+                         style="width: 150px;height: 50px; background: #77162e;"
+
+        >
+        </p:commandButton>
+        <p:commandButton value="Εισαγωγή Νέου Μέλους"
+                         actionListener="#{meloiBean.prepareInsert}"
+                         style="width: 250px;height: 50px"
+                         onclick="PF('dlg3').show();"
+                         rendered="#{LoginBean.user.isAdmin}"
+                         update="insert:insertgrid"
+
+        />
+        <p:commandButton value="Επεξεργασία Κατηγορίας Μέλων"
+                         action="/webContent/katigoriamelous.jsf?faces-redirect=true"
+                         style="width: 290px;height: 50px"
+                         rendered="#{LoginBean.user.isAdmin}"
+        >
+        </p:commandButton>
+        </p:panel>
+        <!--<h:panelGrid columns="2">-->
+        <!--<p:outputLabel value="Συνολικός Αριθμός Μελών :"/>-->
+        <!--<p:outputLabel value="#{meloiBean.countmelos}"/>-->
+        <!--</h:panelGrid>-->
+        <!--<p/>-->
+        <!--Εμφάνιση Μελών -->
+
+        <h:form id="form">
+            <p:panel header="Συνολικός Αριθμός Μελών: #{meloiBean.countmelos}" id="allRender"
+                     >
+
+
+                <p:growl id="msgs" showDetail="true" life="3000" redisplay="false"/>
+
+                <p:outputPanel id="test">
+                    <p:dataTable id="melosList11" var="c" value="#{meloiBean.meloiList}"
+                                 rowIndexVar="it">
+
+                        <p:column headerText="Α/Α" style="width: 25px!important;">
+                            <h:outputText value="#{it+1}"/>
+                        </p:column>
+
+                        <p:column headerText="Επώνυμο"
+                                  filterBy="#{c.eponymo}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{c.eponymo}">
+                            <h:outputText value="#{c.eponymo}"/>
+                        </p:column>
+
+                        <p:column headerText="Όνομα"
+                                  filterBy="#{c.onoma}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{c.onoma}">
+                            <h:outputText value="#{c.onoma}"/>
+                        </p:column>
+
+                        <p:column headerText="Email"
+                                  filterBy="#{c.webmail}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{c.webmail}">
+                            <h:outputText value="#{c.webmail}"/>
+                        </p:column>
+
+                        <p:column headerText="Τηλέφωνο"
+                                  filterBy="#{c.tilefono}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{c.tilefono}">
+                            <h:outputText value="#{c.tilefono}"/>
+                        </p:column>
+
+                        <p:column headerText="Κατηγορία"
+                                  filterBy="#{c.katigoria.katigoria}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{c.katigoria.katigoria}">
+                            <h:outputText value="#{c.katigoria.katigoria}" id="katigoria1"/>
+                        </p:column>
+
+                        <p:column headerText="Επεξεργασία">
+                            <p:commandLink
+                                    oncomplete="PF('dlg6').show();"
+                                    update="leptomeries:leptomeriesGrid"
+
+                                    action="#{meloiBean.meloiData}">
+                                <h:graphicImage name="/icons/application_view_detail.png"
+                                                title="Λεπτομέριες"/>
+                                <f:setPropertyActionListener target="#{meloiBean.melos}"
+                                                             value="#{c}"/>
+
+                            </p:commandLink>
+                            <p:commandLink
+                                    oncomplete="PF('dlg4').show();"
+                                    update="update:updategraid update:ergaInsertL"
+                                    rendered="#{LoginBean.user.isAdmin}"
+                                    action="#{meloiBean.meloiData}">
+                                <h:graphicImage name="/icons/application_edit.png"
+                                                title="Διόρθωση"/>
+                                <f:setPropertyActionListener target="#{meloiBean.melos}"
+                                                             value="#{c}"/>
+
+                            </p:commandLink>
+
+                            <p:commandLink
+                                    oncomplete="PF('dlg5').show();"
+                                    update="update:updategraid"
+                                    rendered="#{LoginBean.user.isAdmin}">
+                                <h:graphicImage name="/icons/application_delete.png"
+                                                title="Διαγραφή"/>
+                                <f:setPropertyActionListener target="#{meloiBean.melos}"
+                                                             value="#{c}"/>
+
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+            </p:panel>
+        </h:form>
+
+
+        <!--Insert Pop-up Εισαγωγή Μέλους-->
+        <p:dialog header="Εισαγωγή Μέλους"
+                  widgetVar="dlg3"
+                  id="dlg3"
+                  modal="true"
+                  width="800"
+                  height="600"
+                  showEffect="explode" hideEffect="bounce"
+                  rendered="#{LoginBean.user.isAdmin}">
+            <h:form id="insert" style="height: auto ; width: auto">
+
+                <p:outputPanel id="insertgrid">
+                    <fieldset>
+                        <p:panelGrid columns="4" id="insertgrid1">
+
+                            <h:outputText value="Επώνυμο"/>
+                            <p:inputText value="#{meloiBean.melos.eponymo}"/>
+
+                            <h:outputText value="Όνομα"/>
+                            <p:inputText value="#{meloiBean.melos.onoma}"/>
+
+                            <h:outputText value="Τηλέφωνο"/>
+                            <p:inputText value="#{meloiBean.melos.tilefono}" placeholder="Μη διαθέσιμο" />
+
+                            <h:outputText value="Email"/>
+                            <p:inputText value="#{meloiBean.melos.webmail}" placeholder="abc@abc.abc"/>
+
+                            <h:outputText value="Κατηγορία Μέλους"/>
+                            <p:selectOneMenu styleClass="selectOneMenu"
+                                             value="#{meloiBean.melos.katigoria.katigoriaId}"
+                                             style="width: 90%">
+                                <f:selectItems value="#{meloiBean.katigoriaList}"
+                                               var="r"
+                                               itemLabel="#{r.katigoria}"
+                                               itemValue="#{r.katigoriaId}"/>
+                            </p:selectOneMenu>
+
+                        </p:panelGrid>
+                        <p/>
+
+                        <div>
+                            <h:outputText value="Βιογραφικό" />
+                            <p/>
+                            <p:panel style="float:left;overflow-y: auto;height: 150px;width: 100%">
+                                <p:inputTextarea value="#{meloiBean.melos.shortCv}" cols="80" style="width: 100% " placeholder="Συμπληρώστε ένα σύντομο βιογραφικό"/>
+                            </p:panel>
+                        </div>
+
+                    </fieldset>
+                    <fieldset>
+                        <legend>Ερευνητικά Έργα:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="ergaInsert">
+                            <p:dataTable id="ereynitikaForOnsert" var="er" value="#{meloiBean.ereynitikaErgaList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Ερευνητικό Έργο" width="40%">
+                                    <h:outputText value="#{er.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="insert:ergaInsert"
+                                            action="#{meloiBean.addErga}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Προσθήκη"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.ereynhtikaErga}"
+                                                                     value="#{er}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+
+                            <p:dataTable id="ereynitikaSelected" var="erI"
+                                         value="#{meloiBean.ereynitikaErgaForInsertList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Ερευνητικό Έργο" width="40%"
+                                >
+                                    <h:outputText value="#{erI.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10%">
+                                    <p:commandLink
+                                            update="insert:ergaInsert"
+                                            action="#{meloiBean.removeErga}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Αφαίρεση"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.ereynhtikaErga}"
+                                                                     value="#{erI}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+                    <p/>
+                    <fieldset>
+                        <legend>Δημοσιεύσεις:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="dimosieuseisInsert">
+                            <p:dataTable id="dimosieuseisForInsertList" var="dim1" value="#{meloiBean.dimosieuseisList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Δημοσιεύσεις Διαθέσιμες" width="40%"
+                                >
+                                    <h:outputText value="#{dim1.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="insert:dimosieuseisInsert"
+                                            action="#{meloiBean.addDimosieuseis}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Προσθήκη"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.dimosieuseis}"
+                                                                     value="#{dim1}"/>
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+
+                            <p:dataTable id="dimosieuseisSelected" var="dim"
+                                         value="#{meloiBean.dimosieuseisForInsertList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Δημοσιεύσεις " width="40%"
+                                >
+                                    <h:outputText value="#{dim.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10%">
+                                    <p:commandLink
+                                            update="insert:dimosieuseisInsert"
+                                            action="#{meloiBean.removeDimosieuseis}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Αφαίρεση"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.dimosieuseis}"
+                                                                     value="#{dim}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+                    <p/>
+                    <fieldset>
+                        <legend>Μαθήματα:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="mathimataInsert">
+                            <p:dataTable id="mathimataForInsert" var="mer" value="#{meloiBean.mathimataList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Μάθημα" width="40%">
+                                    <h:outputText value="#{mer.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="insert:mathimataInsert"
+                                            action="#{meloiBean.addMathimata}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Προσθήκη"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.mathimata}"
+                                                                     value="#{mer}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+
+                            <p:dataTable id="mathimataSelected" var="merI"
+                                         value="#{meloiBean.mathimataForInsertList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Μαθήματα" width="40%"
+                                >
+                                    <h:outputText value="#{merI.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10%">
+                                    <p:commandLink
+                                            update="insert:mathimataInsert"
+                                            action="#{meloiBean.removeMathimata}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Αφαίρεση"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.mathimata}"
+                                                                     value="#{merI}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+                    <p/>
+
+                    <p:commandButton value="Εισαγωγή" action="#{meloiBean.storeMeloi}"
+                                     update="form:allRender  "
+                                     rendered="#{LoginBean.user.isAdmin}"
+                                     oncomplete="PF('dlg3').hide();"/>
+                    <!--</p:panelGrid>-->
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <!--Update Pop-up Ενημέρωση Μελών-->
+        <p:dialog header="Διόρθωση"
+                  widgetVar="dlg4"
+                  id="dlg4"
+                  modal="true"
+                  width="800"
+                  height="600"
+                  rendered="#{LoginBean.user.isAdmin}"
+
+                  showEffect="explode" hideEffect="bounce">
+            <h:form id="update">
+                <p:outputPanel id="updategraid">
+
+                    <p:panelGrid columns="4" id="updategraid1">
+
+                        <h:outputText value="Επώνυμο"/>
+                        <p:inputText value="#{meloiBean.melos.eponymo}"/>
+
+                        <h:outputText value="Όνομα"/>
+                        <p:inputText value="#{meloiBean.melos.onoma}"/>
+
+                        <h:outputText value="Τηλέφωνο" placeholder="Μη διαθέσιμο"/>
+                        <p:inputText value="#{meloiBean.melos.tilefono}"/>
+
+                        <h:outputText value="Email"/>
+                        <p:inputText value="#{meloiBean.melos.webmail}" placeholder="abc@abc.abc"/>
+
+                        <h:outputText value="Κατηγορία Μέλους"/>
+
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{meloiBean.melos.katigoria.katigoriaId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{meloiBean.katigoriaList}"
+                                           var="rr"
+                                           itemLabel="#{rr.katigoria}"
+                                           itemValue="#{rr.katigoriaId}"/>
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+                    <p/>
+                    <div>
+                        <h:outputText value="Βιογραφικό"/>
+                        <p/>
+                        <p:panel style="float:left;overflow-y: auto;height: 150px;width: 100%">
+                            <p:inputTextarea value="#{meloiBean.melos.shortCv}" cols="80" style="width: 100% "/>
+                        </p:panel>
+                    </div>
+                    <fieldset>
+                        <legend>Ερευνητικά Έργα:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="ergaInsertL">
+
+                            <!--Πίνακας Προσθήκης-->
+                            <p:dataTable var="er" value="#{meloiBean.ereynitikaErgaNotInUserList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Ερευνητικό Έργο" width="40%"
+                                >
+                                    <h:outputText value="#{er.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="update:ergaInsertL"
+                                            action="#{meloiBean.addErgaForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Λεπτομέριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.ereynhtikaErga}"
+                                                                     value="#{er}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+                            <!--Πίνακας Αφαίρεσης-->
+                            <p:dataTable var="erI" value="#{meloiBean.ergaMeloysList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Ερευνητικό Έργο" width="40%">
+                                    <h:outputText value="#{erI.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10%">
+                                    <p:commandLink
+                                            update="update:ergaInsertL"
+                                            action="#{meloiBean.removeErgaForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Λεπτομεριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.ereynhtikaErga}"
+                                                                     value="#{erI}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+
+
+                    <p/>
+                    <fieldset>
+                        <legend>Δημοσιεύσεις:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="dimosieuseisInsertL">
+
+                            <!--Πίνακας Προσθήκης Δημοσιεύσεων-->
+                            <p:dataTable var="d" value="#{meloiBean.dimosieuseisNotInUserList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Δημοσιεύσεις" width="40%"
+                                >
+                                    <h:outputText value="#{d.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="update:dimosieuseisInsertL"
+                                            action="#{meloiBean.addDimosieuseisForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Λεπτομεριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.dimosieuseis}"
+                                                                     value="#{d}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+                            <!--Πίνακας Αφαίρεσης Δημοσιεύσεων-->
+                            <p:dataTable var="dimafer" value="#{meloiBean.meloiDimosieuseisList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Δημοσιεύσεις" width="40%"
+                                >
+                                    <h:outputText value="#{dimafer.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10%">
+                                    <p:commandLink
+                                            update="update:dimosieuseisInsertL"
+                                            action="#{meloiBean.removeDimosieuseisForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Λεπτομεριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.dimosieuseis}"
+                                                                     value="#{dimafer}"/>
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+
+
+                    <p/>
+                    <fieldset>
+                        <legend>Μαθήματα:</legend>
+
+                        <p:panelGrid columns="2" style="width: 100%" id="mathimataInsertL">
+
+                            <!--Πίνακας Προσθήκης-->
+                            <p:dataTable var="mer" value="#{meloiBean.mathimataNotInUserList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Μάθημα" width="40%"
+                                >
+                                    <h:outputText value="#{mer.titlos}"/>
+                                </p:column>
+                                <p:column headerText="Προσθήκη" width="10%">
+                                    <p:commandLink
+                                            update="update:mathimataInsertL"
+                                            action="#{meloiBean.addMathimataForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/add.png"
+                                                        title="Λεπτομεριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.mathimata}"
+                                                                     value="#{mer}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+                            </p:dataTable>
+
+                            <!--Πίνακας Αφαίρεσης-->
+                            <p:dataTable var="merI" value="#{meloiBean.meloiMathimataList}"
+                                         rowIndexVar="it">
+                                <p:column headerText="Μάθημα" width="40%">
+                                    <h:outputText value="#{merI.titlos}"/>
+                                </p:column>
+
+                                <p:column headerText="Αφαίρεση" width="10% ">
+                                    <p:commandLink
+                                            update="update:mathimataInsertL"
+                                            action="#{meloiBean.removeMathimataForUpdate}"
+                                            rendered="#{LoginBean.user.isAdmin}">
+                                        <h:graphicImage name="/icons/cancel.png"
+                                                        title="Λεπτομεριες"/>
+                                        <f:setPropertyActionListener target="#{meloiBean.mathimata}"
+                                                                     value="#{merI}"/>
+
+                                    </p:commandLink>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panelGrid>
+                    </fieldset>
+
+
+                    <p/>
+
+
+                    <p:commandButton value="Ενημέρωση" action="#{meloiBean.updateMelos}"
+                                     update="form:allRender form:msgs"
+                                     oncomplete="PF('dlg4').hide();"
+                                     rendered="#{LoginBean.user.isAdmin}"/>
+
+
+                    <!--</p:panelGrid>-->
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <!--Διαγραφή Μελών-->
+        <p:dialog header="Διαγραφή"
+                  widgetVar="dlg5"
+                  id="dlg5"
+                  modal="true"
+        >
+            <h:form id="delete">
+                <p:outputPanel>
+                    <div class="warning" style="background: #77162e">
+                        <h:outputText value="Είστε σίγουροι για την Διαγραφή?"/>
+                    </div>
+                    <p/>
+                    <p:panelGrid columns="2" id="delete1"
+                                 rendered="#{LoginBean.user.isAdmin}">
+
+                        <p:commandButton value="Διαγραφή" action="#{meloiBean.deleteMelos}"
+                                         update="form:allRender form:msgs"
+                                         oncomplete="PF('dlg5').hide();"/>
+                        <p:commandButton value="Ακύρωση"
+                                         oncomplete="PF('dlg5').hide();"/>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <!--Πίνακας Λεπτομεριών-->
+        <p:dialog header="Λεπτομέριες"
+                  widgetVar="dlg6"
+                  id="dlg6"
+                  modal="true"
+                  width="800"
+                  height="600"
+                  closeOnEscape="true"
+
+                  showEffect="explode" hideEffect="bounce" resizable="true">
+            <h:form id="leptomeries">
+                <p:outputPanel id="leptomeriesGrid">
+                  <p:panel id="allRender1"
+                    style="background: #77162e; border-color: #0e2f51"
+                          header="Ο/η κ. #{meloiBean.melos.eponymo} έχει #{meloiBean.countdimelous1} Δημοσιεύσεις, έχει συμμετάσχει
+                   σε #{meloiBean.countergamelous1} Ερευνητικά Έργα και διδάσκει #{meloiBean.countmathimatamelous1} Μαθήματα στο Πανεπιστήμιο Πειραιώς"
+                             >
+                    </p:panel>
+
+
+                    <fieldset>
+                        <p:panelGrid columns="4" id="leptomeriesGrid1">
+
+                            <h:outputText value="Επώνυμο"/>
+                            <p:inputText value="#{meloiBean.melos.eponymo}" readonly="true"/>
+
+                            <h:outputText value="Όνομα"/>
+                            <p:inputText value="#{meloiBean.melos.onoma}" readonly="true"/>
+
+                            <h:outputText value="Τηλέφωνο"/>
+                            <p:inputText value="#{meloiBean.melos.tilefono}" readonly="true"/>
+
+                            <h:outputText value="Email"/>
+                            <p:inputText value="#{meloiBean.melos.webmail}" readonly="true"/>
+
+                            <h:outputText value="Κατηγορία Μέλους"/>
+                            <p:inputText value="#{meloiBean.melos.katigoria.katigoria}" readonly="true"/>
+
+                        </p:panelGrid>
+                        <p/>
+                        <div>
+                        <h:outputText value="Βιογραφικό"/>
+                        <p/>
+                            <p:panel style="float:left;overflow-y: auto;height: 150px;width: 100%">
+                        <p:inputTextarea value="#{meloiBean.melos.shortCv}" readonly="true" cols="80" style="width: 100% "/>
+                            </p:panel>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Ερευνητικά Έργα:</legend>
+                        <p:dataTable id="ergaMalhGrid" var="er" value="#{meloiBean.ergaMeloysList}"
+                                     rowIndexVar="it">
+
+                            <p:column headerText="Α/Α" style="width: 25px!important;">
+                                <h:outputText value="#{it+1}"/>
+                            </p:column>
+
+                            <p:column headerText="Τίτλος">
+                                <h:outputText value="#{er.titlos}"/>
+                            </p:column>
+
+                            <p:column headerText="Περιγραφή"
+                                      filterBy="#{er.perigrafi}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{er.perigrafi}">
+                                <h:outputText value="#{er.perigrafi}"/>
+                            </p:column>
+
+                            <p:column headerText="Έτος"
+                                      filterBy="#{er.etos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{er.etos}">
+                                <h:outputText value="#{er.etos}" pattern="dd-MM-yyyy"/>
+                            </p:column>
+
+                            <!--<p:column headerText="Ημερομηνία Εώς"-->
+                            <!--filterBy="#{er.dateeos}"-->
+                            <!--filterMatchMode="contains"-->
+                            <!--sortBy="#{er.dateeos}">-->
+                            <!--<h:outputText value="#{er.dateeos}"/>-->
+                            <!--</p:column>-->
+
+                            <p:column headerText="Χρηματοδότηση"
+                                      filterBy="#{er.xrimOrgmanismos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{er.xrimOrgmanismos}">
+                                <h:outputText value="#{er.xrimOrgmanismos}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </fieldset>
+                    <p/>
+                    <fieldset>
+                        <legend>Δημοσιεύσεις:</legend>
+                        <p:dataTable id="ergaDimGrid" var="dim" value="#{meloiBean.meloiDimosieuseisList}"
+                                     rowIndexVar="it">
+
+                            <p:column headerText="Α/Α" style="width: 25px!important;">
+                                <h:outputText value="#{it+1}"/>
+                            </p:column>
+
+                            <p:column headerText="Τίτλος"
+                                      filterBy="#{dim.titlos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{dim.titlos}"
+                            >
+                                <h:outputText value="#{dim.titlos}"/>
+                            </p:column>
+
+                            <!--<p:column headerText="Περιγραφή"-->
+                            <!--filterBy="#{dim.titlos}"-->
+                            <!--filterMatchMode="contains"-->
+                            <!--sortBy="#{dim.perigrafi}">-->
+                            <!--<h:outputText value="#{dim.perigrafi}"/>-->
+                            <!--</p:column>-->
+
+                            <p:column headerText="Είδος Δημοσίευσης"
+                                      filterBy="#{dim.eidosDimosieusis.eidos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{dim.eidosDimosieusis.eidos}">
+                                <h:outputText value="#{dim.eidosDimosieusis.eidos}"/>
+                            </p:column>
+
+                            <p:column headerText="Θεματική ενότητα"
+                                      filterBy="#{dim.thematikiEnotita.titlos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{dim.thematikiEnotita.titlos}">
+                                <h:outputText value="#{dim.thematikiEnotita.titlos}"/>
+                            </p:column>
+
+                            <p:column headerText="Έτος"
+                                      filterBy="#{dim.etos}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{dim.etos}">
+                                <h:outputText value="#{dim.etos}" pattern="dd-MM-yyyy"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </fieldset>
+                    <p/>
+                    <fieldset>
+                        <legend>Μαθήματα:</legend>
+                        <p:dataTable id="MathimataMeloiGrid" var="mer" value="#{meloiBean.meloiMathimataList}"
+                                     rowIndexVar="it">
+
+                            <p:column headerText="Α/Α" style="width: 25px!important;">
+                                <h:outputText value="#{it+1}"/>
+                            </p:column>
+
+                            <p:column headerText="Τίτλος">
+                                <h:outputText value="#{mer.titlos}"/>
+                            </p:column>
+                            <p:column headerText="Επίπεδο Μαθήματος"
+                                      filterBy="#{meloiBean.mathimata.epipedo.epipedoId}"
+                                      filterMatchMode="contains"
+                                      sortBy="#{meloiBean.mathimata.epipedo.epipedo}">
+                                <h:outputText value="#{meloiBean.mathimata.epipedo.epipedo}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </fieldset>
+                    <p/>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+    </ui:define>
+
+</ui:composition>
+

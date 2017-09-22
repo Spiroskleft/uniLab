@@ -1,0 +1,346 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+    <!--xmlns:a4j="http://richfaces.org/a4j"-->
+    <!--xmlns:rich="http://richfaces.org/rich"-->
+
+    <ui:define name="title">Επεξεργασία Δημοσίευσης</ui:define>
+    <ui:define name="header">
+        <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml"/>
+    </ui:define><!--  #{request.contextPath}/  -->
+    <ui:define name="topMenu"><ui:include src="/menus/topMenu.xhtml"></ui:include></ui:define>
+    <!--<ui:define name="leftMenu"><ui:include src="/menus/leftKentriki.xhtml"></ui:include></ui:define>-->
+    <ui:define name="content">
+        <p:panel>
+        <p:commandButton value="Επιστροφή"
+                         action="/webContent/arxiki.jsf?faces-redirect=true"
+                         style="width: 150px;height: 50px;  background: #77162e"
+        >
+        </p:commandButton>
+        <p:commandButton value="Νέα Δημοσίευση"
+                         actionListener="#{dimosieuseisBean.clear}"
+                         style="width: 250px;height: 50px"
+                         onclick="PF('dlg3').show();"
+                         update="insert:dimosieusisid"
+                         rendered="#{LoginBean.user.isAdmin}"
+        />
+        <p:commandButton value="Επεξεργασία Είδους Δημοσίευσης"
+                         action="/webContent/eidosdimosieusis.jsf?faces-redirect=true"
+                         style="width: 300px;height: 50px"
+                         rendered="#{LoginBean.user.isAdmin}"
+        >
+        </p:commandButton>
+        <p:commandButton value="Επεξεργασία Θεματικής Εννότητας"
+                         action="/webContent/thematiki.jsf?faces-redirect=true"
+                         style="width: 350px;height: 50px"
+                         rendered="#{LoginBean.user.isAdmin}"
+        >
+        </p:commandButton>
+        <p:commandButton value="Αριθμός Δημοσιεύσεων Ζευγών Μελών"
+                         style="width: 350px;height: 50px"
+                         onclick="PF('dlg6').show();"
+
+        />
+        </p:panel>
+        <h:form id="form">
+            <p:panel header="Συνολικός Αριθμός Δημοσιεύσεων: #{dimosieuseisBean.countDimosieuseis1}" id="allRender"
+                     style="background-color: #77162e; border-color: #0e2f51">
+
+                <p:growl id="msgs" showDetail="true" life="3000" redisplay="false"/>
+
+                <p:dataTable id="dimosieusisList11" var="c" value="#{dimosieuseisBean.dimosieuseisList}"
+                             rowIndexVar="it">
+
+                    <p:column headerText="Α/Α" style="width: 25px!important;">
+                        <h:outputText value="#{it+1}"/>
+                    </p:column>
+
+                    <p:column headerText="Δημοσίευση" filterBy="#{c.titlos}" filterMatchMode="contains"
+                              sortBy="#{c.titlos}">
+                        <h:outputText value="#{c.titlos}"/>
+                    </p:column>
+                    <p:column headerText="΄Ετος" filterBy="#{c.etos}" filterMatchMode="contains" sortBy="#{c.etos}">
+                        <h:outputText value="#{c.etos}">
+                            <f:convertDateTime pattern="MM/yyyy" timeZone="Europe/Athens"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Είδος Δημοσίευσης"
+                              filterBy="#{c.eidosDimosieusis.eidosId}"
+                              filterMatchMode="contains"
+                              sortBy="#{c.eidosDimosieusis.eidos}">
+                        <h:outputText value="#{c.eidosDimosieusis.eidos}"/>
+                    </p:column>
+                    <p:column headerText="Θεματική Ενότητα" filterBy="#{c.thematikiEnotita.titlos}"
+                              filterMatchMode="contains" sortBy="#{c.thematikiEnotita.titlos}">
+                        <h:outputText value="#{c.thematikiEnotita.titlos}"/>
+                    </p:column>
+                    <p:column headerText="Μέλη"
+                    >
+
+                        <p:commandLink
+                                oncomplete=" if (args &amp;&amp; !args.validationFailed) PF('dlgmeloi').show();"
+                                update="dlgme:test11"
+                                action="#{dimosieuseisBean.meloiDimosieusis}">
+                            <h:graphicImage name="/icons/door_in.png"
+                                            title="Μέλη Δημοσίευσης"/>
+                            <f:setPropertyActionListener target="#{dimosieuseisBean.dimosieuseis}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+                    </p:column>
+
+
+                    <p:column headerText="Επεξεργασία"
+                              rendered="#{LoginBean.user.isAdmin}">
+                        <p:commandLink
+                                oncomplete=" if (args &amp;&amp; !args.validationFailed) PF('dlg4').show();"
+                                update="update:updategraid">
+                            <h:graphicImage name="/icons/application_edit.png"
+                                            title="Διόρθωση"/>
+                            <f:setPropertyActionListener target="#{dimosieuseisBean.dimosieuseis}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+                        <p:commandLink
+                                oncomplete="PF('dlg5').show();"
+                                update="update:updategraid">
+                            <h:graphicImage name="/icons/application_delete.png"
+                                            title="Διαγραφή"/>
+                            <f:setPropertyActionListener target="#{dimosieuseisBean.dimosieuseis}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </p:panel>
+        </h:form>
+
+
+        <p:dialog header="Προσθήκη νέας δημοσίευσης"
+                  widgetVar="dlg3"
+                  id="dlg3"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="200"
+                  rendered="#{LoginBean.user.isAdmin}">
+            <h:form id="insert">
+                <p:outputPanel id="dimosieusisid">
+                    <p:panelGrid columns="2" id="dimosieusisid1">
+
+                        <h:outputText value="Τίτλος"/>
+                        <p:inputText value="#{dimosieuseisBean.dimosieuseis.titlos}"/>
+
+                        <h:outputText value="Έτος"/>
+                        <!--<p:inputText value="#{dimosieuseisBean.dimosieuseis.etos}"/>-->
+                        <p:calendar pattern="MM/yyyy" value="#{dimosieuseisBean.dimosieuseis.etos}"/>
+                        <h:outputText value="Θεματική Ενότητα"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{dimosieuseisBean.dimosieuseis.thematikiEnotita.thematikiId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{dimosieuseisBean.thematikiEnotitaList}"
+                                           var="ra"
+                                           itemLabel="#{ra.titlos}"
+                                           itemValue="#{ra.thematikiId}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Είδος"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{dimosieuseisBean.dimosieuseis.eidosDimosieusis.eidosId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{dimosieuseisBean.eidosDimosieusisList}"
+                                           var="ei"
+                                           itemLabel="#{ei.eidos}"
+                                           itemValue="#{ei.eidosId}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:commandButton value="Εισαγωγή" action="#{dimosieuseisBean.storeDimosieuseis}"
+                                         update="form:allRender form:msgs"
+                                         oncomplete="PF('dlg3').hide();"/>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog header="Επεξεργασία"
+                  widgetVar="dlg4"
+                  id="dlg4"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="200"
+                  rendered="#{LoginBean.user.isAdmin}">
+            <h:form id="update">
+                <p:outputPanel>
+                    <p:panelGrid columns="2" id="updategraid">
+                        <h:outputText value="Τϊτλος"/>
+                        <p:inputText value="#{dimosieuseisBean.dimosieuseis.titlos}"/>
+
+                        <h:outputText value="Έτος"/>
+                        <!--<p:spinner id="etos" value="#{dimosieuseisBean.dimosieuseis.etos}" min="1990"/>-->
+                        <p:calendar pattern="MM/yyyy" value="#{dimosieuseisBean.dimosieuseis.etos}"/>
+                        <h:outputText value="Θεματική Ενότητα"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{dimosieuseisBean.dimosieuseis.thematikiEnotita.thematikiId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{dimosieuseisBean.thematikiEnotitaList}"
+                                           var="ra"
+                                           itemLabel="#{ra.titlos}"
+                                           itemValue="#{ra.thematikiId}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Είδος"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{dimosieuseisBean.dimosieuseis.eidosDimosieusis.eidosId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{dimosieuseisBean.eidosDimosieusisList}"
+                                           var="ei"
+                                           itemLabel="#{ei.eidos}"
+                                           itemValue="#{ei.eidosId}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:commandButton value="Διόρθωση"
+                                         action="#{dimosieuseisBean.updateDimosieuseis}"
+                                         update="form:allRender form:msgs "
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dlg4').hide();"/>
+
+                    </p:panelGrid>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog header="Διαγραφή"
+                  widgetVar="dlg5"
+                  id="dlg5"
+                  modal="true"
+                  rendered="#{LoginBean.user.isAdmin}"
+        >
+            <h:form id="delete">
+                <p:outputPanel>
+                    <p:panelGrid columns="1" id="delete1">
+
+                        <h:outputText value="Είστε σίγουροι για την Διαγραφή???"/>
+
+
+                        <p:commandButton value="Διαγραφή" action="#{dimosieuseisBean.deleteDimosieuseis}"
+                                         update="form:allRender"
+                                         oncomplete="PF('dlg5').hide();"/>
+                        <p:commandButton value="Ακύρωση"
+                                         oncomplete="PF('dlg5').hide();"/>
+
+                    </p:panelGrid>
+
+                </p:outputPanel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Ζεύγη Μελών με κοινές Δημοσιεύσεις"
+                  widgetVar="dlg6"
+                  id="dlg6"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="500">
+
+            <h:form id="showmeloi">
+                <p:outputPanel id="dimosieusislistid">
+                    <p:dataTable id="dimosieusislistid11" var="c" value="#{dimosieuseisBean.dimosieuseisList}"
+                                 rowIndexVar="it" style="height: 5%">
+
+                        <p:column headerText="Id Δημοσίευσης" filterBy="#{c.dimosieusiId}" filterMatchMode="contains"
+                                  sortBy="#{c.dimosieusiId}" style="width: 10%">
+                            <h:outputText value="#{c.dimosieusiId}"/>
+                        </p:column>
+
+                        <p:column headerText="Δημοσίευση" filterBy="#{c.titlos}" filterMatchMode="contains"
+                                  sortBy="#{c.titlos}">
+                            <h:outputText value="#{c.titlos}"/>
+                        </p:column>
+                        <p:column headerText="Έτος" filterBy="#{c.etos}" filterMatchMode="contains"
+                                  sortBy="#{c.etos}" style="width: 10%">
+                            <h:outputText value="#{c.etos}">
+                                <f:convertDateTime pattern="MM/yyyy" timeZone="Europe/Athens"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>
+
+                <p:outputPanel>
+                    <p:dataTable id="eidList" var="ci" value="#{dimosieuseisBean.countCommonDimosieuseisList}"
+                                 rowIndexVar="it" filterEvent="enter">
+
+                        <p:column headerText="Α/Α" style="width: 25px!important;">
+                            <h:outputText value="#{it+1}"/>
+                        </p:column>
+                        <p:column headerText="Επώνυμο Μέλους Δημοσίευσης" filterBy="#{ci[0]}" filterMatchMode="contains"
+                                  sortBy="#{ci[0]}">
+                            <h:outputText value="#{ci[0]}"/>
+                        </p:column>
+                        <p:column headerText="Επώνυμο Μέλους Δημοσίευσης" filterBy="#{ci[1]}" filterMatchMode="contains"
+                                  sortBy="#{ci[1]}">
+                            <h:outputText value="#{ci[1]}"/>
+                        </p:column>
+
+                        <p:column headerText="Id Δημοσιεύσεων" filterBy="#{ci[2]}" filterMatchMode="contains"
+                                  sortBy="#{ci[2]}">
+                            <h:outputText value="#{ci[2]}"/>
+                        </p:column>
+
+                        <p:column headerText="Αριθμός Κοινών Δημοσίευσεων" filterBy="#{ci[3]}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{ci[3]}">
+                            <h:outputText value="#{ci[3]}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog header="Μέλη Δημοσίευσης"
+                  widgetVar="dlgmeloi"
+                  id="dlgmeloi"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="200"
+                  >
+            <h:form id="dlgme">
+                <p:outputPanel id="test11">
+                    <p:dataTable id="meloiList11" var="m" value="#{dimosieuseisBean.meloiDimosieusisList}"
+                                 rowIndexVar="it" style="width: 100%"
+                                 filterEvent="enter">
+
+                        <p:column headerText="Α/Α" style="width: 10px!important;">
+                           <center> <h:outputText value="#{it+1}"/></center>
+                        </p:column>
+
+                        <p:column headerText="Επώνυμο" style="width: 55px!important;" filterBy="#{m.eponymo}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{m.eponymo}">
+                            <h:outputText value="#{m.eponymo}"/>
+                        </p:column>
+                        <p:column headerText="Όνομα" style="width: 55px!important;" filterBy="#{m.onoma}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{m.onoma}">
+                            <h:outputText value="#{m.onoma}"/>
+                        </p:column>
+                    </p:dataTable>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
+

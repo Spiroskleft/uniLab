@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/composite"
+>
+    <h:form><p:panel>
+        <p:panelGrid columns="5"
+                     style="padding-bottom: 5px;padding-left: 5px;padding-right: 5px;padding-top: 5px;border-style: hidden !important; ">
+            <p:graphicImage value="/resources/foto/UNIPI_(logo).png" height="65" width="65"/>
+
+            <h:outputText style="font-size: 200%;" value="Ερευνητικό Εργαστήριο Πανεπιστημίου"/>
+
+        </p:panelGrid>
+        <p:commandButton value="Έξοδος"
+                         action="#{AposindesiBean.aposindesiUser}"
+                         style="width: 80px;height: 25px; background: #77162e"
+        >
+        </p:commandButton><p:clock pattern="Ημερομηνία: dd.MM.yyyy - Ώρα: HH:mm:ss "/>
+
+
+        <p:menubar style="background-color: #77162e; border-color: #0e2f51" >
+            <p:submenu label="Αρχική" icon="	ui-icon-seek-first">
+                <p:menuitem value="Αρχική" url="/webContent/arxiki.jsf?faces-redirect=true"/>
+            </p:submenu>
+            <p:submenu label="Μέλη" icon="	ui-icon-person">
+                <p:menuitem value="Μέλη" url="/webContent/meloi.jsf?faces-redirect=true"/>
+                <p:menuitem value="Κατηγορία Μέλους" url="/webContent/katigoriamelous.jsf?faces-redirect=true"
+                            rendered="#{LoginBean.user.isAdmin}"/>
+            </p:submenu>
+            <p:submenu label="Δημοσιεύσεις" icon=" ui-icon-folder-open ">
+                <p:menuitem value="Δημοσιεύσεις" url="/webContent/dimosieuseis.jsf?faces-redirect=true"/>
+                <p:menuitem value="Ειδος Δημοσιεύσεων" url="/webContent/eidosdimosieusis.jsf?faces-redirect=true"
+                            rendered="#{LoginBean.user.isAdmin}"/>
+                <p:menuitem value="Θεματική Εννότητα" url="/webContent/thematiki.jsf?faces-redirect=true"
+                            rendered="#{LoginBean.user.isAdmin}"/>
+            </p:submenu>
+            <p:submenu label="Ερευνητικά Έργα" icon=" ui-icon-folder-open ">
+                <p:menuitem value="Ερευνητικά Έργα" url="/webContent/ereynitikaErga.jsf?faces-redirect=true"/>
+                <p:menuitem value="Κατάσταση Ερευνητικού Έργου" url="/webContent/katastasiErgou.jsf?faces-redirect=true"
+                            rendered="#{LoginBean.user.isAdmin}"/>
+            </p:submenu>
+            <p:submenu label="Μαθήματα" icon="ui-icon-script">
+                <p:menuitem value="Μαθήματα" url="/webContent/Mathimata.jsf?faces-redirect=true"/>
+                <p:menuitem value="Επίπεδο Μαθήματος" url="/webContent/epipedo.jsf?faces-redirect=true"
+                            rendered="#{LoginBean.user.isAdmin}"/>
+            </p:submenu>
+            <p:submenu label="Ανακοινώσεις" icon="ui-icon-calendar">
+                <p:menuitem value="Ανακοινώσεις" url="/webContent/anakoinwseis.jsf?faces-redirect=true"/>
+            </p:submenu>
+            <p:submenu label="Πληροφορίες" icon="ui-icon-info">
+                <p:menuitem value="Πληροφορίες" url="/webContent/hellopage.jsf?faces-redirect=true"/>
+            </p:submenu>
+
+            <p:menuitem value="Quit" url="/webContent/login.jsf?faces-redirect=true" icon="ui-icon-close"/>
+
+
+
+        </p:menubar>
+
+        <p:panel
+                style="background: #0e2f51; border-color: #77162e"
+                rendered="#{LoginBean.user.isAdmin}">
+            <strong>Σελίδα Διαχειριστή</strong>
+        </p:panel>
+
+    </p:panel>
+    </h:form>
+
+
+    <!--  *********************************************************************-->
+    <!--                        Please Wait Panel                              -->
+    <!--  *********************************************************************-->
+
+    <!--<p:ajaxStatus id="ajaxStatus"-->
+    <!--onstart="#{PF('waitPanel')}.show()"-->
+    <!--onstop="#{PF('waitPanel')}.hide()"/>-->
+
+    <!--<p:dialog id="waitPanel" autosized="true" style="text-align: center;">-->
+
+    <!--<h:graphicImage value="/resources/icons/loader.gif"/>-->
+
+    <!--<p/>-->
+
+    <!--<h:outputText value="Παρακαλώ περιμένετε"/>-->
+
+    <!--</p:dialog>-->
+
+
+    <!--<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">-->
+    <!--<f:facet name="default">-->
+    <!--<h:outputText value="Status: StandBy"/>-->
+    <!--</f:facet>-->
+
+    <!--<f:facet name="start">-->
+    <!--<p:graphicImage url="/resources/icons/loader.gif"/>-->
+    <!--</f:facet>-->
+
+    <!--<f:facet name="complete">-->
+    <!--<h:outputText value="Status: Completed"/>-->
+    <!--</f:facet>-->
+    <!--</p:ajaxStatus>-->
+
+    <!--<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>-->
+
+    <!--<p:dialog widgetVar="statusDialog" modal="true" draggable="false" style="text-align: center;" closable="false"-->
+    <!--resizable="false" showHeader="false">-->
+    <!--<h:graphicImage value="/resources/icons/loader.gif"/>-->
+
+    <!--<p/>-->
+    <!--<h:outputText value="Παρακαλώ περιμένετε"/>-->
+
+    <!--</p:dialog>-->
+
+    <!--<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">-->
+    <!--<f:facet name="default">-->
+    <!--<h:outputText value="Status: StandBy"/>-->
+    <!--</f:facet>-->
+
+    <!--<f:facet name="start">-->
+    <!--<p:graphicImage url="/resources/icons/loader.gif"/>-->
+    <!--</f:facet>-->
+
+    <!--<f:facet name="complete">-->
+    <!--<h:outputText value="Status: Completed"/>-->
+    <!--</f:facet>-->
+    <!--</p:ajaxStatus>-->
+
+    <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" style="text-align: center;" closable="false"
+              resizable="false" showHeader="false">
+        <h:graphicImage value="/resources/icons/loader.gif"/>
+
+        <p/>
+        <h:outputText value="Παρακαλώ περιμένετε"/>
+
+    </p:dialog>
+
+
+</ui:composition>

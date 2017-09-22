@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 6, 2016 11:32:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.KatastasiErgou" table="katastasi_ergou" catalog="universitylab" optimistic-lock="version">
+        <id name="katastasiId" type="java.lang.Integer">
+            <column name="katastasi_id" />
+            <generator class="identity" />
+        </id>
+        <property name="katastasi" type="string">
+            <column name="katastasi" length="50" not-null="true" />
+        </property>
+        <set name="ereynitikaErgas" table="ereynitika_erga" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="katastasi_id" not-null="true" />
+            </key>
+            <one-to-many class="model.EreynitikaErga" />
+        </set>
+    </class>
+</hibernate-mapping>

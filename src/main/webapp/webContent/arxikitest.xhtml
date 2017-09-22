@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+
+    <ui:define name="title">ΕΡΓΑΣΤΗΡΙΟ ΠΑΝΕΠΙΣΤΗΜΙΟΥ"</ui:define>
+    <ui:define name="header">
+        <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml"/>
+    </ui:define><!--  #{request.contextPath}/  -->
+    <ui:define name="topMenu"><ui:include src="/menus/topMenu.xhtml"></ui:include></ui:define>
+    <ui:define name="leftMenu"><ui:include src="/menus/leftKentriki.xhtml"></ui:include></ui:define>
+    <ui:define name="content">
+        <p:panel id="panel">
+
+            <div class="info">
+                <h5>DEL </h5>
+                DELIT
+                <br/>
+                <ul>
+                    <li>SPIROS</li>
+
+                </ul>
+
+            </div>
+            <p:panelGrid columns="3"
+                         style="padding-bottom: 5px;padding-left: 5px;padding-right: 5px;padding-top: 5px;border-style: hidden !important;">
+
+
+
+
+                <p:commandButton value="Κατηγορία Μέλους"
+                                 action="/webContent/katigoriamelous.jsf?faces-redirect=true"
+                                 style="width: 250px;height: 50px"
+                >
+                </p:commandButton>
+
+                <p:commandButton value="Θεματική Εννότητα"
+                                 action="/webContent/thematiki.jsf?faces-redirect=true"
+                                 style="width: 250px;height: 50px"
+                >
+                </p:commandButton>
+
+                <p:commandButton value="Είδος Δημοσίευσης"
+                                 action="/webContent/eidosdimosieusis.jsf?faces-redirect=true"
+                                 style="width: 250px;height: 50px"
+                >
+                </p:commandButton>
+
+
+
+
+            </p:panelGrid>
+            <center> Created by Spiros Kl</center>
+
+
+        </p:panel>
+
+
+    </ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 6, 2016 11:32:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Mathimata" table="mathimata" catalog="universitylab" optimistic-lock="version">
+        <id name="mathimataId" type="java.lang.Integer">
+            <column name="mathimata_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="epipedo" class="model.Epipedo" fetch="select" lazy="false">
+            <column name="epipedo" not-null="true" />
+        </many-to-one>
+        <property name="titlos" type="string">
+            <column name="titlos" length="150" not-null="true" />
+        </property>
+        <set name="melois" table="meloi_mathimata" inverse="false" lazy="false" fetch="select">
+            <key>
+                <column name="mathimata_id" not-null="true"/>
+            </key>
+            <many-to-many entity-name="model.Meloi">
+                <column name="melos_id" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

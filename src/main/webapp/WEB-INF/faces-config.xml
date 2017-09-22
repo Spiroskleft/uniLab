@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+     <application>         
+        <locale-config>
+            <default-locale>en</default-locale>
+        </locale-config>     
+     </application>
+     
+    <navigation-rule>
+        
+        <from-view-id>/webContent/login.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-action>#{LoginBean.validateUser}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/webContent/login.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{LoginBean.validateUser}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/webContent/hellopage.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    
+</faces-config>

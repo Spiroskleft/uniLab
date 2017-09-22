@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 6, 2016 11:32:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Meloi" table="meloi" catalog="universitylab" optimistic-lock="version">
+        <id name="melosId" type="java.lang.Integer">
+            <column name="melos_id"/>
+            <generator class="identity" />
+        </id>
+        <many-to-one name="katigoria" class="model.Katigoria" fetch="select" lazy="false">
+            <column name="katigoria_id" />
+        </many-to-one>
+        <property name="onoma" type="string">
+            <column name="onoma" length="50" not-null="true" />
+        </property>
+        <property name="eponymo" type="string">
+            <column name="eponymo" length="50" not-null="true" />
+        </property>
+        <property name="webmail" type="string">
+            <column name="webmail" length="260" />
+        </property>
+        <property name="shortCv" type="string">
+            <column name="short_cv" length="5000" />
+        </property>
+        <property name="tilefono" type="string">
+            <column name="tilefono" length="20" />
+        </property>
+        <set name="mathimatas" table="meloi_mathimata" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="melos_id" not-null="true"/>
+            </key>
+            <many-to-many entity-name="model.Mathimata">
+                <column name="mathimata_id" not-null="true"/>
+            </many-to-many>
+        </set>
+        <set name="dimosieuseises" table="meloi_dimosieuseis" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="melos_id" not-null="true"/>
+            </key>
+            <many-to-many entity-name="model.Dimosieuseis">
+                <column name="dimosieusis_id" not-null="true"/>
+            </many-to-many>
+        </set>
+        <set name="ereynitikaErgas" table="meloi_ereynitika_erga" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="meloi_id" not-null="true"/>
+            </key>
+            <many-to-many entity-name="model.EreynitikaErga">
+                <column name="ereynitika_id" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

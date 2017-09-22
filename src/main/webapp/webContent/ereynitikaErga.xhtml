@@ -1,0 +1,361 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+    <!--xmlns:a4j="http://richfaces.org/a4j"-->
+    <!--xmlns:rich="http://richfaces.org/rich"-->
+
+    <ui:define name="title">Επεξεργασία Ερευνητικών Έργων</ui:define>
+    <ui:define name="header">
+        <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml"/>
+    </ui:define><!--  #{request.contextPath}/  -->
+    <ui:define name="topMenu"><ui:include src="/menus/topMenu.xhtml"></ui:include></ui:define>
+    <!--<ui:define name="leftMenu"><ui:include src="/menus/leftKentriki.xhtml"></ui:include></ui:define>-->
+    <ui:define name="content">
+    <p:panel>
+        <p:commandButton value="Επιστροφή"
+                         action="/webContent/arxiki.jsf?faces-redirect=true"
+                         style="width: 150px;height: 50px;  background: #77162e"
+        >
+        </p:commandButton>
+
+        <p:commandButton value="Νέο Ερευνητικό Έργο"
+                         actionListener="#{ereynitikaBean.clear}"
+                         style="width: 250px;height: 50px"
+                         onclick="PF('dlg3').show();"
+                         update="insert:ereynitikaid"
+                         rendered="#{LoginBean.user.isAdmin}"
+        />
+        <p:commandButton value="Επεξεργασία Καταστάσεων Έργου"
+                         action="/webContent/katastasiErgou.jsf?faces-redirect=true"
+                         style="width: 300px;height: 50px "
+                         rendered="#{LoginBean.user.isAdmin}"
+
+        >
+        </p:commandButton>
+        <p:commandButton value="Αριθμός Έργων Ζευγών Μελών"
+                         style="width: 350px;height: 50px"
+                         onclick="PF('dlg6').show();"
+
+        />
+    </p:panel>
+        <h:form id="form">
+            <p:panel header="Συνολικός Αριθμός Ερευνητικών Έργων:  #{ereynitikaBean.countErga1}" id="allRender" style="background-color: #77162e; border-color: #0e2f51">
+
+                <p:growl id="msgs" showDetail="true" life="3000" redisplay="false"/>
+
+                <p:dataTable id="ereynitikaList11" var="c" value="#{ereynitikaBean.ereynitikaErgaList}"
+                             rowIndexVar="it">
+
+                    <p:column headerText="Α/Α" style="width: 25px!important;">
+                        <h:outputText value="#{it+1}"/>
+                    </p:column>
+
+                    <p:column headerText="Έργο" filterBy="#{c.titlos}" filterMatchMode="contains" sortBy="#{c.titlos}">
+                        <h:outputText value="#{c.titlos}"/>
+                    </p:column>
+                    <p:column headerText="Από ΄Ετος" filterBy="#{c.etos}" filterMatchMode="contains" sortBy="#{c.etos}">
+                        <h:outputText value="#{c.etos}">
+                            <f:convertDateTime pattern="yyyy" timeZone="Europe/Athens"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Έως ΄Ετος" filterBy="#{c.etos_ews}" filterMatchMode="contains" sortBy="#{c.etos_ews}">
+                        <h:outputText value="#{c.etos_ews}">
+                            <f:convertDateTime pattern="yyyy" timeZone="Europe/Athens"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Περιγραφή" filterBy="#{c.perigrafi}" filterMatchMode="contains"
+                              sortBy="#{c.perigrafi}">
+                        <h:outputText value="#{c.perigrafi}"/>
+                    </p:column>
+                    <p:column headerText="Χρηματοδοτικός Οργανισμός" filterBy="#{c.xrimOrgmanismos}"
+                              filterMatchMode="contains" sortBy="#{c.xrimOrgmanismos}">
+                        <h:outputText value="#{c.xrimOrgmanismos}"/>
+                    </p:column>
+                    <p:column headerText="Κατάσταση Έργου"
+                              filterBy="#{c.katastasiErgou.katastasiId}"
+                              filterMatchMode="contains"
+                              sortBy="#{c.katastasiErgou.katastasi}">
+                        <h:outputText value="#{c.katastasiErgou.katastasi}"/>
+                    </p:column>
+                    <p:column headerText="Μέλη"
+                    >
+
+                        <p:commandLink
+                                oncomplete=" if (args &amp;&amp; !args.validationFailed) PF('dlgmeloi').show();"
+                                update="dlgme:test11"
+                                action="#{ereynitikaBean.meloiErgou}">
+                            <h:graphicImage name="/icons/door_in.png"
+                                            title="Μέλη Ερευνητικού Έργου"/>
+                            <f:setPropertyActionListener target="#{ereynitikaBean.ereynitikaErga}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+                    </p:column>
+
+
+                    <p:column headerText="Επεξεργασία"
+                              rendered="#{LoginBean.user.isAdmin}"
+                    >
+                        <p:commandLink
+                                oncomplete=" if (args &amp;&amp; !args.validationFailed) PF('dlg4').show();"
+                                update="update:updategraid">
+                            <h:graphicImage name="/icons/application_edit.png"
+                                            title="Διόρθωση"/>
+                            <f:setPropertyActionListener target="#{ereynitikaBean.ereynitikaErga}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+                        <p:commandLink
+                                oncomplete="PF('dlg5').show();"
+                                update="update:updategraid">
+                            <h:graphicImage name="/icons/application_delete.png"
+                                            title="Διαγραφή"/>
+                            <f:setPropertyActionListener target="#{ereynitikaBean.ereynitikaErga}"
+                                                         value="#{c}"/>
+
+                        </p:commandLink>
+
+                        <!--<p:commandLink-->
+                                <!--oncomplete="PF('dlg6').show();"-->
+                                <!--update="members:members1"-->
+                                <!--action="#{ereynitikaBean.meloiEreynitikaErga}">-->
+                            <!--<h:graphicImage name="/icons/group.png"-->
+                                            <!--title="Προβολή Ατόμων Δημοσίευσης"/>-->
+                            <!--<f:setPropertyActionListener target="#{ereynitikaBean.ereynitikaErga}"-->
+                                                         <!--value="#{c}"/>-->
+                        <!--</p:commandLink>-->
+
+                    </p:column>
+
+                </p:dataTable>
+        </p:panel>
+            </h:form>
+
+
+
+        <p:dialog header="Προσθήκη νέου έργου"
+                  widgetVar="dlg3"
+                  id="dlg3"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="300">
+            <h:form id="insert">
+                <p:outputPanel id="ereynitikaid">
+                    <p:panelGrid columns="2" id="ereynitikaid1">
+
+                        <h:outputText value="Τίτλος"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.titlos}"/>
+
+                        <h:outputText value="Από Έτος"/>
+                        <p:calendar pattern="yyyy" value="#{ereynitikaBean.ereynitikaErga.etos}"/>
+                        <!--<p:spinner id="etosapo" value="#{ereynitikaBean.ereynitikaErga.etos.date}" min="1995"/>-->
+
+                        <h:outputText value="Έως Έτος"/>
+                        <p:calendar pattern="yyyy" value="#{ereynitikaBean.ereynitikaErga.etos_ews}"/>
+                        <!--<p:spinner id="etosews" value="#{ereynitikaBean.ereynitikaErga.etos_ews.date}" min="1995"/>-->
+
+                        <h:outputText value="Περιγραφή"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.perigrafi}"/>
+
+                        <h:outputText value="Χρηματοδοτικός Οργανισμός"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.xrimOrgmanismos}"/>
+
+                        <h:outputText value="Κατάσταση Έργου"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{ereynitikaBean.ereynitikaErga.katastasiErgou.katastasiId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{ereynitikaBean.katastasiErgouList}"
+                                           var="ka"
+                                           itemLabel="#{ka.katastasi}"
+                                           itemValue="#{ka.katastasiId}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:commandButton value="Εισαγωγή" action="#{ereynitikaBean.storeEreynitikaErga}"
+                                         update="form:allRender form:msgs"
+                                         oncomplete="PF('dlg3').hide();"/>
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog header="Επεξεργασία"
+                  widgetVar="dlg4"
+                  id="dlg4"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="300">
+            <h:form id="update">
+                <p:outputPanel>
+                    <p:panelGrid columns="2" id="updategraid">
+                        <h:outputText value="Τϊτλος"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.titlos}"/>
+
+                        <h:outputText value="Από Έτος"/>
+                        <!--<p:spinner id="etos" value="#{ereynitikaBean.ereynitikaErga.etos.date}" min="1995"/>-->
+                        <p:calendar pattern="yyyy" value="#{ereynitikaBean.ereynitikaErga.etos}"/>
+
+                        <h:outputText value="Έως Έτος"/>
+                        <!--<p:spinner id="etos_ews" value="#{ereynitikaBean.ereynitikaErga.etos_ews.date}" min="1995"/>-->
+                        <p:calendar pattern="yyyy" value="#{ereynitikaBean.ereynitikaErga.etos_ews}"/>
+
+                        <h:outputText value="Περιγραφή"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.perigrafi}"/>
+
+                        <h:outputText value="Χρηματοδοτικός Οργανισμός"/>
+                        <p:inputText value="#{ereynitikaBean.ereynitikaErga.xrimOrgmanismos}"/>
+
+                        <h:outputText value="Κατάσταση Έργου"/>
+                        <p:selectOneMenu styleClass="selectOneMenu"
+                                         value="#{ereynitikaBean.ereynitikaErga.katastasiErgou.katastasiId}"
+                                         style="width: 90%">
+                            <f:selectItems value="#{ereynitikaBean.katastasiErgouList}"
+                                           var="kat"
+                                           itemLabel="#{kat.katastasi}"
+                                           itemValue="#{kat.katastasiId}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:commandButton value="Διόρθωση"
+                                         action="#{ereynitikaBean.updateEreynitikaErga}"
+                                         update="form:ereynitikaList11 form:msgs"
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dlg4').hide();"/>
+
+                    </p:panelGrid>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog header="Διαγραφή"
+                  widgetVar="dlg5"
+                  id="dlg5"
+                  modal="true"
+        >
+            <h:form id="delete">
+                <div class="warning" style="background: #77162e">
+                <p:outputPanel>
+
+                    <p:panelGrid columns="1" id="delete1">
+
+                        <h:outputText value="Είστε σίγουροι για την Διαγραφή???"/>
+
+
+                        <p:commandButton value="Διαγραφή" action="#{ereynitikaBean.deleteEreynitikaErga}"
+                                         update="form:allRender"
+                                         oncomplete="PF('dlg5').hide();"/>
+                        <p:commandButton value="Ακύρωση"
+                                         oncomplete="PF('dlg5').hide();"/>
+
+                    </p:panelGrid>
+
+                </p:outputPanel>
+            </div>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Μέλη Ερευνητικού Έργου"
+                  widgetVar="dlgmeloi"
+                  id="dlgmeloi"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="200"
+        >
+            <h:form id="dlgme">
+                <p:outputPanel id="test11">
+                    <p:dataTable id="meloiList11" var="m" value="#{ereynitikaBean.meloiEreynitikaErgaList}"
+                                 rowIndexVar="it" style="width: 100%"
+                                 filterEvent="enter">
+
+                        <p:column headerText="Α/Α" style="width: 10px!important;">
+                            <center> <h:outputText value="#{it+1}"/></center>
+                        </p:column>
+
+                        <p:column headerText="Επώνυμο" style="width: 55px!important;" filterBy="#{m.eponymo}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{m.eponymo}">
+                            <h:outputText value="#{m.eponymo}"/>
+                        </p:column>
+                        <p:column headerText="Όνομα" style="width: 55px!important;" filterBy="#{m.onoma}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{m.onoma}">
+                            <h:outputText value="#{m.onoma}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Ζεύγη Μελών με κοινά Ερευνητικά Έργα"
+                  widgetVar="dlg6"
+                  id="dlg6"
+                  modal="true"
+                  showEffect="explode" hideEffect="bounce" height="500">
+
+            <h:form id="showmeloi">
+                <p:outputPanel id="ergalistid">
+                    <p:dataTable id="ergalistid11" var="c" value="#{ereynitikaBean.ereynitikaErgaList}"
+                                 rowIndexVar="it" style="height: 5%">
+
+                        <p:column headerText="Id Έργου" filterBy="#{c.ergoId}" filterMatchMode="contains"
+                                  sortBy="#{c.ergoId}" style="width: 10%">
+                            <h:outputText value="#{c.ergoId}"/>
+                        </p:column>
+
+                        <p:column headerText="Έργο" filterBy="#{c.titlos}" filterMatchMode="contains"
+                                  sortBy="#{c.titlos}">
+                            <h:outputText value="#{c.titlos}"/>
+                        </p:column>
+                        <p:column headerText="Έτος" filterBy="#{c.etos}" filterMatchMode="contains"
+                                  sortBy="#{c.etos}" style="width: 10%">
+                            <h:outputText value="#{c.etos}">
+                                <f:convertDateTime pattern="yyyy" timeZone="Europe/Athens"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>
+
+                <p:outputPanel>
+                    <p:dataTable id="eidList" var="ci" value="#{ereynitikaBean.countCommonErgaList}"
+                                 rowIndexVar="it" filterEvent="enter">
+
+                        <p:column headerText="Α/Α" style="width: 25px!important;">
+                            <h:outputText value="#{it+1}"/>
+                        </p:column>
+                        <p:column headerText="Επώνυμο Μέλους Έργου" filterBy="#{ci[0]}" filterMatchMode="contains"
+                                  sortBy="#{ci[0]}">
+                            <h:outputText value="#{ci[0]}"/>
+                        </p:column>
+                        <p:column headerText="Επώνυμο Μέλους Έργου" filterBy="#{ci[1]}" filterMatchMode="contains"
+                                  sortBy="#{ci[1]}">
+                            <h:outputText value="#{ci[1]}"/>
+                        </p:column>
+
+                        <p:column headerText="Id Έργου" filterBy="#{ci[2]}" filterMatchMode="contains"
+                                  sortBy="#{ci[2]}">
+                            <h:outputText value="#{ci[2]}"/>
+                        </p:column>
+
+                        <p:column headerText="Αριθμός Κοινών Έργων" filterBy="#{ci[3]}"
+                                  filterMatchMode="contains"
+                                  sortBy="#{ci[3]}">
+                            <h:outputText value="#{ci[3]}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
+

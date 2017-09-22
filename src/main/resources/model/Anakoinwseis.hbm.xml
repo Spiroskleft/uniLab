@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 6, 2016 11:32:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Anakoinwseis" table="anakoinwseis" catalog="universitylab" optimistic-lock="version">
+        <id name="anakoinwsiId" type="java.lang.Integer">
+            <column name="anakoinwsi_id" />
+            <generator class="identity" />
+        </id>
+        <property name="titlos" type="string">
+            <column name="titlos" length="150" not-null="true" />
+        </property>
+        <property name="perigrafi" type="string">
+            <column name="perigrafi" length="450" />
+        </property>
+        <property name="date" type="date">
+            <column name="date" length="10" not-null="true" />
+        </property>
+        <property name="thematiki" type="string">
+            <column name="thematiki" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 6, 2016 11:32:44 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Dimosieuseis" table="dimosieuseis" catalog="universitylab" optimistic-lock="version">
+        <id name="dimosieusiId" type="java.lang.Integer">
+            <column name="dimosieusi_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="eidosDimosieusis" class="model.EidosDimosieusis" fetch="select" lazy="false">
+            <column name="eidos_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="thematikiEnotita" class="model.ThematikiEnotita" fetch="select" lazy="false">
+            <column name="thematiki_id" not-null="true" />
+        </many-to-one>
+        <property name="titlos" type="string">
+            <column name="titlos" length="200" not-null="true" />
+        </property>
+        <property name="etos" type="date">
+            <column name="etos" length="10" not-null="true" />
+        </property>
+        <set name="melois" table="meloi_dimosieuseis" inverse="false" lazy="false" fetch="select">
+            <key>
+                <column name="dimosieusis_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="model.Meloi">
+                <column name="melos_id" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

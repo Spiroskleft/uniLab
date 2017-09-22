@@ -1,0 +1,322 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+    <!--xmlns:a4j="http://richfaces.org/a4j"-->
+    <!--xmlns:rich="http://richfaces.org/rich"-->
+
+    <ui:define name="title">Car Registration</ui:define>
+    <ui:define name="header">
+        <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml"/>
+    </ui:define><!--  #{request.contextPath}/  -->
+    <ui:define name="topMenu"><ui:include src="/menus/topMenu.xhtml"></ui:include></ui:define>
+    <!--<ui:define name="leftMenu"><ui:include src="/menus/leftKentriki.xhtml"></ui:include></ui:define>-->
+    <ui:define name="content">
+
+        <p:panel header="Car Registration" id="allRender">
+        <h:form id="carForm">
+            <p:outputLabel value="Vehicle details" style="font-size: 30px"/>
+            <hr/>
+            <p:panelGrid columns="2"
+                         styleClass="noBorder firstColumnAlignRight"
+                         cellspacing="4">
+
+                <p:outputLabel value="Category"/>
+
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.katigoria.katigoriaId}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.katigoriaList}"
+                                   var="ka"
+                                   itemLabel="#{ka.katigoria} "
+                                   itemValue="#{ka}"/>
+                    <p:column>
+                        <h:outputText value="#{katigoria.katigoria} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Make"/>
+
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.marka}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.markaList}"
+                                   var="marka"
+                                   itemLabel="#{marka.marka} "
+                                   itemValue="#{marka.markaId}"/>
+                    <p:column>
+                        <h:outputText value="#{marka.marka} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel value="Make"/>
+                <p:inputText value="#{carInsertBean.car.typos}"/>
+
+            </p:panelGrid>
+
+            <br/>
+
+
+
+            <p:outputLabel value="Registration" style="font-size: 30px"/>
+            <hr/>
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="4">
+                <p:outputLabel value="Registration"/>
+                <p:spinner id="registration" value="#{carInsertBean.car.registration}" min="1915" max="2017"/>
+            </p:panelGrid>
+
+
+
+
+
+            <br/>
+            <p:outputLabel value="Engine Details" style="font-size: 30px"/>
+            <hr/>
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="4">
+
+                <p:outputLabel value="Milage"/>
+                <p:inputText value="#{carInsertBean.car.xiliometra}"/>
+
+                <p:outputLabel value="Kybika"/>
+                <p:inputText value="#{carInsertBean.car.kybika}"/>
+
+                <p:outputLabel value="Horse Power"/>
+                <p:inputText value="#{carInsertBean.car.ippoi}"/>
+
+                <p:outputLabel value="Fuel Type"/>
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.kaysimo}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.kaysimoList}"
+                                   var="ka"
+                                   itemLabel="#{ka.kaysimo} "
+                                   itemValue="#{ka.kaysimoId}"/>
+                    <p:column>
+                        <h:outputText value="#{ka.kaysimo} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel value="Euro Standar"/>
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.euroclass}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.euroclassesList}"
+                                   var="e"
+                                   itemLabel="#{e.euroclass} "
+                                   itemValue="#{e.euroclassId}"/>
+                    <p:column>
+                        <h:outputText value="#{e.euroclass} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Transmission"/>
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.sasman}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.sasmanList}"
+                                   var="sa"
+                                   itemLabel="#{sa.sasman} "
+                                   itemValue="#{sa.sasmanId}"/>
+                    <p:column>
+                        <h:outputText value="#{sa.sasman} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel value="Drive type"/>
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.kinisi}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.kinisiList}"
+                                   var="ki"
+                                   itemLabel="#{ki.kinisi} "
+                                   itemValue="#{ki.kinisiId}"/>
+                    <p:column>
+                        <h:outputText value="#{ki.kinisi} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+
+            <br/>
+            <p:outputLabel value="Body Details" style="font-size: 30px"/>
+            <hr/>
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="4">
+
+
+                <p:outputLabel value="Color"/>
+                <p:selectOneMenu styleClass="selectOneMenu" required="true"
+                                 style="width:80%;"
+                                 value="#{carInsertBean.car.color}"
+                                 effect="fade" filter="true" filterMatchMode="contains"
+                >
+                    <f:selectItems value="#{carInsertBean.colorList}"
+                                   var="color"
+                                   itemLabel="#{color.color} "
+                                   itemValue="#{color.colorId}"/>
+                    <p:column>
+                        <h:outputText value="#{color.color} "/>
+                    </p:column>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Doors"/>
+                <p:spinner id="minMax" value="#{carInsertBean.car.portes}" min="2" max="7"/>
+
+                <p:outputLabel value="Airbags"/>
+                <p:spinner id="minMax1" value="#{carInsertBean.car.aerosakoi}" min="2" max="10"/>
+
+                <p:outputLabel value="Seats"/>
+                <p:spinner id="minMax2" value="#{carInsertBean.car.kathismata}" min="2" max="7"/>
+
+                <p:outputLabel value="Crashed"/>
+                <p:inputSwitch value="#{carInsertBean.car.zhmia}" onLabel="YES" offLabel="NO"/>
+
+            </p:panelGrid>
+
+            <br/>
+            <p:outputLabel value="General Description" style="font-size: 30px"/>
+            <hr/>
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="4">
+
+                <p:outputLabel value="Description"/>
+                <p:inputTextarea value="#{carInsertBean.car.perigrafi}" rows="5" cols="70" counter="display"
+                                 maxlength="200" counterTemplate="{0} characters remaining." autoResize="false"/>
+                <h:outputText id="display"/>
+            </p:panelGrid>
+
+            <p:commandButton value="test" action="#{carInsertBean.test}"/>
+
+
+            <br/>
+            <p:outputLabel value="Offer Details" style="font-size: 30px"/>
+            <hr/>
+            <div class="info">
+                You will get a better response to your ad if you give a real price.
+
+                If you put a fake price, your classified will be displayed at the end of the search results.
+            </div>
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="4">
+
+                <p:outputLabel value="Price"/>
+                <!--<p:inputNumber id="input2" value="0.0" symbol=" EYRO" symbolPosition="s"-->
+                <!--decimalSeparator="," thousandSeparator="." style="width: 50px"/>-->
+                <p:inputText/>
+            </p:panelGrid>
+
+
+            <br/>
+            <p:outputLabel value="EXTRAS" style="font-size: 30px"/>
+            <hr/>
+
+            <p:panelGrid columns="2"
+                         styleClass="firstColumnAlignRight noBorder"
+                         cellspacing="10"
+            >
+
+                <p:panelGrid columns="2"
+                             styleClass="firstColumnAlignRight noBorder"
+                             cellspacing="10"
+                >
+
+                    <h:outputText value="7-θεσιο-Πολύτεκνου: " styleClass="alignright"/>
+                    <p:selectBooleanCheckbox/>
+
+
+                    <h:outputText value="Turbo: " style="text-align: right!important;"/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Δερμάτινα Καθίσματα: " styleClass="firstColumnAlignRight"/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Κλιματισμός(A/C): "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="ABS: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Xenon φώτα: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Εγγύηση: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Κοτσαδόρος: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Cruise Control: "/>
+                    <p:selectBooleanCheckbox/>
+
+
+                </p:panelGrid>
+                <p:panelGrid columns="2"
+                             styleClass="firstColumnAlignRight noBorder"
+                             cellspacing="10"
+                >
+
+                    <h:outputText value="Bluetooth: "/>
+                    <p:selectBooleanCheckbox/>
+
+
+                    <h:outputText value="Αερανάρτηση: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Εισαγωγής: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Οροφή Ηλεκτρική / Ηλίου: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Bucket Καθίσματα: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Αισθητήρας Βροχής: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Οροφή Πανοραμική: "/>
+                    <p:selectBooleanCheckbox/>
+
+                    <h:outputText value="Αναπηρικό: "/>
+                    <p:selectBooleanCheckbox/>
+                    <h:outputText value="Ζάντες αλουμινίου: "/>
+                    <p:selectBooleanCheckbox/>
+
+
+                </p:panelGrid>
+            </p:panelGrid>
+
+
+        </h:form>
+        </p:panel>
+
+
+    </ui:define>
+
+</ui:composition>
+

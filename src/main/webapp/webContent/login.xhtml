@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/mainTemplate/demo_page.xhtml">
+
+    <ui:define name="title">Είσοδος</ui:define>
+    <ui:define name="menu">
+        <div class="error">Ερευνητικό Εργαστήριο</div>
+    </ui:define>
+    <ui:define name="content">
+        <center>
+            <h:form id="loginform">
+                <p:growl id="growl1" showDetail="false"/>
+                <p:growl id="growl" showDetail="true" for="password username"/>
+                <h:panelGrid width="auto" columns="3" border="0" style="text-align: center">
+
+                    <p:panel header="Είσοδος στην Εφαρμογή University Lab">
+                        <div class="info" style="background-color: #77162e; border-color: #0e2f51">
+                            <h5>ΕΦΑΡΜΟΓΗ ΕΡΕΥΝΗΤΙΚΟΥ ΕΡΓΑΣΤΗΡΙΟΥ ΠΑΝΕΠΙΣΤΗΜΙΟΥ</h5>
+                            Ερευνητικό Εργαστήριο Πανεπιστημίου - University Lab
+                        </div>
+                        <h:outputText value="Παρακαλώ Συμπληρώστε τα στοιχεία εισόδου"/>
+                        <h:panelGrid id="lpg" columns="2" style="border: none">
+
+                            <h:outputText value="Όνομα Χρήστη"/>
+                            <p:inputText id="username" value="#{LoginBean.username}" styleClass="inputbox" required="true"
+                                         autocomplete="off" requiredMessage="Πρέπει να συμπληρώσετε ένα username">
+                                <f:validateLength minimum="1" maximum="20" />
+                            </p:inputText>
+
+                            <h:outputText value="Συνθηματικό"/>
+                            <p:password id="password" value="#{LoginBean.password}" styleClass="inputbox" required="true"  feedback="true" goodLabel="Καλό" weakLabel="Αδύνατο" strongLabel="Δυνατό" label="Παρακαλώ πληκτρολογήστε το password" promptLabel="Παρακαλώ πληκτρολογήστε το password"
+                                           autocomplete="off" requiredMessage="Πρέπει να συμπληρώσετε ένα password"  >
+                                <f:validateLength minimum="0" maximum="120" />
+                            </p:password>
+
+
+
+
+                        </h:panelGrid>
+
+                        <p></p>
+                        <p:commandButton value="Είσοδος" action="#{LoginBean.validateUser()}"
+                                         styleClass="submitButton" ajax="false"/>
+
+
+                    </p:panel>
+                </h:panelGrid>
+            </h:form>
+        </center>
+    </ui:define>
+
+
+    <!--  *********************************************************************-->
+    <!--                        Please Wait Panel                              -->
+    <!--  *********************************************************************-->
+    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" style="text-align: center;"
+              closable="false" resizable="false" showHeader="false">
+        <h:graphicImage value="/resources/icons/loader.gif"/>
+
+        <p/>
+        <h:outputText value="Παρακαλώ περιμένετε"/>
+
+    </p:dialog>
+
+
+</ui:composition>

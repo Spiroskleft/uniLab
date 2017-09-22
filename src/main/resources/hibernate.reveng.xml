@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+    <schema-selection match-catalog="universitylab"/>
+    <table-filter match-name="anakoinwseis"/>
+    <table-filter match-name="katigoria"/>
+    <table-filter match-name="ereynitika_erga"/>
+    <table-filter match-name="eidos_dimosieusis"/>
+    <table-filter match-name="meloi"/>
+    <table-filter match-name="dimosieuseis"/>
+    <table-filter match-name="epipedo"/>
+    <table-filter match-name="meloi_mathimata"/>
+    <table-filter match-name="mathimata"/>
+    <table-filter match-name="meloi_dimosieuseis"/>
+    <table-filter match-name="katastasi_ergou"/>
+    <table-filter match-name="thematiki_enotita"/>
+    <table-filter match-name="meloi_ereynitika_erga"/>
+    <table-filter match-name="users"/>
+</hibernate-reverse-engineering>

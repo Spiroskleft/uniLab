@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/composite">
+<h:head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title><ui:insert name="title"></ui:insert></title>
+
+    <!--<script src="http://code.jquery.com/jquery-1.9.0.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
+    <!--<script type="text/javascript" src="#{request.contextPath}/mainTemplate/script.js"></script>-->
+
+    <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/icons/favicon.ico" />
+    <link rel="stylesheet" href="#{request.contextPath}/mainTemplate/style.css" type="text/css" media="screen" />
+    <!--[if IE 6]><link rel="stylesheet" href="#{request.contextPath}/mainTemplate/style.ie6.css" type="text/css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" href="#{request.contextPath}/mainTemplate/style.ie7.css" type="text/css" media="screen" /><![endif]-->
+
+    <h:outputStylesheet library="css" name="style.css" />
+
+    <style>.art-content .art-postcontent-0 .layout-item-0 { padding-right: 10px;padding-left: 10px;  }
+    .ie7 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+    .ie6 .art-post .art-layout-cell {border:none !important; padding:0 !important; }
+
+    </style>
+
+    <script type="text/javascript">
+        PrimeFaces.locales['el'] = {
+            closeText: 'Κλείσιμο',
+            prevText: 'Προηγούμενο',
+            nextText: 'Επόμενο',
+            monthNames: ['Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάϊος', 'Ιούνιος', 'Ιούλιος', 'Άυγουστος', 'Σεπτέμβιος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος'],
+            monthNamesShort: ['Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαι', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ'],
+            dayNames: ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'],
+            dayNamesShort: ['Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ'],
+            dayNamesMin: ['Κ', 'Δ', 'Τρ', 'Τε', 'Πε', 'Πα', 'Σ'],
+            weekHeader: 'Εβδ',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Επιλογή Ώρας',
+            timeText: 'Χρόνος',
+            hourText: 'Ώρα',
+            minuteText: 'Λεπτό',
+            secondText: 'Δεύτερολεπτο',
+            currentText: 'Τώρα',
+            ampm: false,
+            month: 'Μήνας',
+            week: 'Εβδομάδα',
+            day: 'Μέρα',
+            allDayText: 'Όλη Μέρα'
+        };
+    </script>
+</h:head>
+<h:body>
+    <div id="art-main">
+        <div class="art-sheet clearfix">
+            <!--<header class="art-header">-->
+
+
+                <!--<div class="art-shapes">-->
+                    <!--<div class="art-object0" data-left="6.32%"></div>-->
+
+                <!--</div>-->
+                <!--<h1 class="art-headline" data-left="71.86%">-->
+                    <!--<a href="#{request.contextPath}/webContent/arxiki.jsf">Ο ΓΑΛΑΝΗΣ</a>-->
+                <!--</h1>-->
+                <!--<h2 class="art-slogan" data-left="71.86%">Καφεκοπτείο- Ξηροί Καρποί-Ζαχαρώδη</h2>-->
+
+            <!--</header>-->
+
+            <div class="art-layout-wrapper">
+                <div class="art-content-layout">
+
+                    <ui:insert name="topMenu"></ui:insert>
+                    <!--<div class="art-content-layout-row">-->
+                        <!--<div class="art-layout-cell art-content"><article class="art-post art-article">-->
+
+                            <div class="art-postcontent art-postcontent-0 clearfix"><div class="art-content-layout">
+                                <!--<div class="art-content-layout-row">-->
+                                    <!--<div class="art-layout-cell layout-item-0" style="width: 100%" >-->
+
+
+                                        <ui:insert name="content"></ui:insert>
+
+
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                                <!--<div class="art-content-layout">-->
+                                    <!--<div class="art-content-layout-row">-->
+                                        <!--<div class="art-layout-cell layout-item-0" style="width: 50%" >-->
+                                            <!--<ul>-->
+                                                <!--<li>Suspendisse pharetra auctor pharetra. Nunc a sollicitudin est.</li>-->
+
+                                                <!--<li>Donec vel neque in neque porta venenatis sed sit amet lectus.</li>-->
+
+                                                <!--<li>Curabitur ullamcorper gravida felis, sit amet scelerisque lorem iaculis sed.</li>-->
+                                            <!--</ul>-->
+                                        <!--</div><div class="art-layout-cell layout-item-0" style="width: 50%" >-->
+                                        <!--<blockquote style="margin: 10px 0">-->
+                                            <!--Nunc a sollicitudin est. Curabitur ullamcorper gravida felis, sit amet scelerisque lorem iaculis sed. Donec vel neque in neque porta venenatis sed sit amet lectus.-->
+                                        <!--</blockquote>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+
+
+
+                        <!--</article></div>-->
+                    <!--</div>-->
+                </div>
+            </div><footer class="art-footer">
+            <!--<a title="RSS" class="art-rss-tag-icon" style="position: absolute; bottom: 5px; left: 6px; line-height: 32px;" href="#"></a>-->
+            <div style="position:relative;padding-left:10px;padding-right:10px">
+                <p><br/></p>
+
+            <p>Copyright © 2016. All Rights Reserved.</p></div>
+        </footer>
+
+        </div>
+        <p class="art-page-footer">
+            <!--<span id="art-footnote-links"><a href="http://www.artisteer.com/" target="_blank">Web Template</a> created with Artisteer.</span>-->
+        </p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</h:body>
+</html>

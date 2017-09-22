@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24 ??? 2016 12:10:37 ?? by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.MeloiEreynitikaErga" table="meloi_ereynitika_erga" catalog="universitylab" optimistic-lock="version">
+        <composite-id name="id" class="model.MeloiEreynitikaErgaId">
+            <key-property name="meloiId" type="string">
+                <column name="meloi_id" length="50" />
+            </key-property>
+            <key-property name="ereynitikaId" type="int">
+                <column name="ereynitika_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="ereynitikaErga" class="model.EreynitikaErga" update="false" insert="false" fetch="select">
+            <column name="ereynitika_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="meloi" class="model.Meloi" update="false" insert="false" fetch="select">
+            <column name="meloi_id" length="50" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
